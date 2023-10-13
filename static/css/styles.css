@@ -1,3 +1,12 @@
+/*----- For table -----*/
+.blue_tr {
+  /*background-color: blue;*/
+  background-color: lightgray;
+}
+.white_tr {
+  background-color: white;
+}
+
 /*----- For button "Add", "Edit", "Delete" -----*/
 .my-button {
   margin-top: 1rem !important;

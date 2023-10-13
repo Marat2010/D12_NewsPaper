@@ -1,3 +1,4 @@
+import logging
 from time import timezone
 
 from django.contrib.auth.decorators import login_required
@@ -20,6 +21,7 @@ from django.conf import settings
 # from django.views.decorators.cache import cache_page
 
 DEFAULT_FROM_EMAIL = settings.DEFAULT_FROM_EMAIL
+logger = logging.getLogger("django")
 
 
 # @cache_page(60 * 15)  # D7.3. Кэширование в Django (view)
@@ -29,7 +31,7 @@ class PostsList(ListView):
     context_object_name = 'posts'
     ordering = ['-dateCreation']
     form_class = PostForm
-    paginate_by = 3
+    paginate_by = 5
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -52,7 +54,7 @@ class PostSearch(ListView):
     context_object_name = 'posts'
     ordering = ['-id']
     form_class = PostForm
-    paginate_by = 3
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = PostFilter(self.request.GET, super().get_queryset()).qs
@@ -125,7 +127,7 @@ class CategoryDetailView(ListView):
     context_object_name = 'posts'
     ordering = ['-id']
     # ordering = ['-dateCreation']
-    paginate_by = 3
+    paginate_by = 5
 
     def get_queryset(self):
         cat = Category.objects.get(pk=self.kwargs['pk'])
@@ -144,6 +146,7 @@ class CategoryDetailView(ListView):
 def subscribe_to(request, pk):
     user = request.user
     category = Category.objects.get(pk=pk)
+    logger.info(f"== Пользователь: '{user}' подписался на категорию: '{category}' ==")
 
     if not category.subscribers.filter(pk=user.id).exists():
         category.subscribers.add(user)
@@ -179,14 +182,17 @@ def subscribe_to(request, pk):
 def unsubscribe_from(request, pk):
     user = request.user
     category = Category.objects.get(pk=pk)
-    print('===11===', category)
+    logger.info(f"== Пользователь: '{user}' отписался от категории: '{category}' ==")
     if category.subscribers.filter(id=user.id).exists():
         category.subscribers.remove(user)
     return redirect('news:categories')
     # return redirect(request.META.get('HTTP_REFERER'))
 
 
-
+# --------------------------------
+# def div_zero():
+#     result = 5 / 0
+#     logger.error("Деление на ноль!!!")
 
 # -------------------------------
 # class Category2DetailView(ListView):

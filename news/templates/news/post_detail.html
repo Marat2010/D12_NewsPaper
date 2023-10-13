@@ -1,5 +1,7 @@
 {% extends 'layout/default.html' %}
 
+{% load custom_filters %}
+
 {% block title %}
     Новость: {{ post.title }}
 {% endblock title %}
@@ -7,7 +9,7 @@
 {% block content %}
     <div class="card">
         <div class="card-header">
-            <h3>{{ post.title }}</h3>
+            <h3>{{ post.title|Censor2 }}</h3>
             <div>
                 Автор: <span class="badge bg-info">{{ post.author }}</span>
                 Тип: <span class="badge bg-info">{{ post.get_categoryType_display }}</span>
@@ -21,7 +23,7 @@
                 </span>
             </div>
         </div>
-        <div class="card-body">{{ post.text }}</div>
+        <div class="card-body">{{ post.text|Censor2 }}</div>
     </div>
     <a href="{% url 'news:posts' %}" class="btn btn-primary my-3">В начало</a>
 

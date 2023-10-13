@@ -34,9 +34,9 @@
                 <th scope="col">Действия</th>
 
             </tr>
-{#            {% for post in filter.qs %}#}
+            {#            {% for post in filter.qs %}#}
             {% for post in posts %}
-                <tr>
+                <tr class="{% cycle 'blue_tr' 'white_tr' %}">
                     <td>
                         <a href="{% url 'news:post_detail' post.pk %}">
                             {{ post.title|truncatewords:8|truncatechars:50|Censor }}

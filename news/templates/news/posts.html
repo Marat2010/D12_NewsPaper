@@ -41,14 +41,14 @@
                 <th scope="col">Действия</th>
             </tr>
             {% for post in posts %}
-                <tr>
+                <tr class="{% cycle 'blue_tr' 'white_tr' %}">
                     <td>
                         <a href="{% url 'news:post_detail' post.pk %}">
-                            {{ post.title|truncatewords:8|truncatechars:50|Censor }}
+                            {{ post.title|truncatewords:8|truncatechars:50|Censor2 }}
                         </a>
                     </td>
                     <td>{{ post.dateCreation| date:'d-M-Y H:i' }}</td>
-                    <td>{{ post.text|truncatechars:50|Censor }}</td>
+                    <td>{{ post.text|truncatechars:50|Censor2 }}</td>
                     <td>
                         <a href="{% url 'news:post_update' post.pk %}">Редактирование</a>
                         <a href="{% url 'news:post_delete' post.pk %}">Удалить</a>
